@@ -3,13 +3,35 @@
 
 void game()
 {
+	srand((unsigned int)time(NULL));
 	char cb[ROW][COL];
+	char r = 'C';
 	init(cb,ROW,COL);
 	print(cb,ROW,COL);
-	player_move();
-	print(cb, ROW, COL);
-	com_move();
-	print(cb, ROW, COL);
+	while (r == 'C')
+	{
+		player_move(cb, ROW, COL);
+		print(cb, ROW, COL);
+		r = result(cb, ROW, COL);
+		if (r == '*')
+			break;
+		com_move(cb, ROW, COL);
+		print(cb, ROW, COL);
+		r = result(cb, ROW, COL);
+	}
+	switch(r)
+	{
+	case '*':
+		printf("玩家获胜！\n");
+		break;
+	case '#':
+		printf("电脑获胜！\n");
+		break;
+	case 'P':
+		printf("平局\n");
+	}
+	
+
 }
 
 void game_play()
