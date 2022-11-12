@@ -1,6 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS 1
 #include "game.h"
 
+
 void menu()
 {
 	printf("***********************************\n");
@@ -68,7 +69,30 @@ char player_do(char board[ROWS][COLS], char bone[ROWS][COLS], int x, int y)
 	}
 	else
 	{
-		bone[x][y] = '0' + count(board, x, y);
+		unfold(board,bone, x, y, '0' + count(board, x, y));
 		return 'c';
+	}
+}
+
+void unfold(char board[ROWS][COLS],char bone[ROWS][COLS],int x,int y,char r)
+{
+	if (r == '0')
+	{
+		if (bone[x][y] != ' ')
+		{
+			bone[x][y] = ' ';
+			unfold(board, bone, x - 1, y - 1, '0' + count(board, x - 1, y - 1));
+			unfold(board, bone, x - 1, y , '0' + count(board, x - 1, y ));
+			unfold(board, bone, x - 1, y + 1, '0' + count(board, x - 1, y + 1));
+			unfold(board, bone, x , y - 1, '0' + count(board, x , y - 1));
+			unfold(board, bone, x , y + 1, '0' + count(board, x , y + 1));
+			unfold(board, bone, x + 1, y - 1, '0' + count(board, x + 1, y - 1));
+			unfold(board, bone, x + 1, y , '0' + count(board, x + 1, y ));
+			unfold(board, bone, x + 1, y + 1, '0' + count(board, x + 1, y + 1));
+		}
+	}
+	else
+	{
+		bone[x][y] = '0' + count(board, x, y);
 	}
 }
